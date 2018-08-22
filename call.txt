@@ -1,0 +1,9 @@
+| — start_in_session
+| | — _enqueue_next_group
+| | | — _get_next_example # Loads [input, mel_target, linear_target, cost] from disk
+| | | — batches # 将example按$hparams.batch_size分块
+| | | | — foreach batch in batches
+| | | | — _prepare_batch
+| | | — sess.run
+| | | | — test_1
+| | | | — test_2
