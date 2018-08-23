@@ -1,9 +1,21 @@
-| — start_in_session
-| | — _enqueue_next_group
-| | | — _get_next_example # Loads [input, mel_target, linear_target, cost] from disk
-| | | — batches # 将example按$hparams.batch_size分块
-| | | | — foreach batch in batches
-| | | | — _prepare_batch
-| | | — sess.run
-| | | | — test_1
-| | | | — test_2
+| — initialize
+| | — embedding_table = tf.get_variable
+| | — embedded_inputs = tf.nn.embedding_lookup
+| | — encoder_cell = TacotronEncoderCell() # Class(RNNCell)
+| | | — EncoderConvolutions
+| | | — EncoderRNN
+| | — encoder_outputs = encoder_cell
+| | — Prenet
+| | — attention_mechanism = LocationSensitiveAttention
+| | — decoder_lstm = DecoderRNN
+| | — frame_projection = FrameProjection
+| | — stop_projection = StopProjection
+| | — decoder_cell = TacotronDecoderCell() # Class(RNNCell)
+| | — decoder_cell.zero_state # decode_init_state
+| | — dynamic_decode
+| | | — CustomDecoder(decoder_cell, decode_init_state) # Class(Decoder)
+| | | — decoder_output # resharp output
+| | — Compute Residual Prejection
+| | | — residual = postnet(decoder_output)
+| | | — projected_residual # residual_projection(residual)
+| | — mel_outputs = decoder_output + projected_residual

@@ -22,7 +22,7 @@ while i <= depth:
         if n.son_list:
             gr_list.append(Graphic(n.son_list).join_funcs())
     if gr_list:
-        w = logic_path[(len(gr_list) - 1) * 1](gr_list, sep)
+        w = logic_path[0 if len(gr_list) == 0 else 1](gr_list, sep)
         graph[i] = w
         if width < len(w[0]):
             width = len(w[0])
